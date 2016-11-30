@@ -1,0 +1,113 @@
+body {
+  background-color: #537237
+}
+
+h1{
+  color: white;
+  text-align: center;
+}
+
+button {
+  height: 300;
+  width: 300;
+  background-image: url(https://www.sergent-tobogo.com/wp-content/uploads/2015/04/Im-so-happy-Final1-Copie.jpg);
+}
+
+@keyframes blink {
+  0% {
+    height:100px;
+    opacity:1;
+  }
+  50% {
+    opacity:0;
+    height:50px;
+  }
+  100% {
+    opacity:1;
+    height:100px;
+  }
+}
+
+img{
+    width: 45px;
+    height: 45px;
+}
+
+table, th{
+  border: 1px solid black;
+  border-collapse: collapse;
+
+}
+
+td {
+    height: 45px;
+    width: 45px;
+}
+
+.noir{
+background-color:black;
+}
+
+.blanc{
+background-color:white;
+}
+
+.WKing{
+background-image: url(WKing.png);
+background-color: transparent;
+}
+
+.WQueen{
+background-image: url(WQueen.png);
+background-color: transparent;
+}
+
+.WBishop{
+background-image: url(WBishop.png);
+background-color: transparent;
+}
+
+.WKnight{
+background-image: url(WKnight.png);
+background-color: transparent;
+}
+
+.WRook{
+background-image: url(WRook.png);
+background-color: transparent;
+}
+
+.WPawn{
+background-image: url(/WPawn.png);
+background-color: transparent;
+}
+
+.BKing{
+background-image: url(BKing.png);
+background-color: transparent;
+}
+
+.BQueen{
+background-image: url(BQueen.png);
+background-color: transparent;
+}
+
+.BBishop{
+background-image: url(BBishop.png);
+background-color: transparent;
+}
+
+.BKnight{
+background-image: url(BKnight.png);
+background-color: transparent;
+}
+
+.BRook{
+background-image: url(BRook.png);
+background-color: transparent;
+}
+
+.BPawn{
+background-image: url(BPawn.png);
+background-color: transparent;
+}
