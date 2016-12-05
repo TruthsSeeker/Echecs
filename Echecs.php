@@ -145,5 +145,50 @@
                 </tr>
             <?php endforeach; ?>
         </table>
+		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" id="movement">
+			Point de Depart: <select name="PV" id="movement">
+								<option value=7>1</option>
+								<option value=6>2</option>
+								<option value=5>3</option>
+								<option value=4>4</option>
+								<option value=3>5</option>
+								<option value=2>6</option>
+								<option value=1>7</option>
+								<option value=0>8</option>
+							</select>
+							
+							<select name="PH" id="movement">
+								<option value=0>A</option>
+								<option value=1>B</option>
+								<option value=2>C</option>
+								<option value=3>D</option>
+								<option value=4>E</option>
+								<option value=5>F</option>
+								<option value=6>G</option>
+								<option value=7>H</option>
+							</select>
+			
+			<br>Destination: <select name="DV" id="movement">
+								<option value=7>1</option>
+								<option value=6>2</option>
+								<option value=5>3</option>
+								<option value=4>4</option>
+								<option value=3>5</option>
+								<option value=2>6</option>
+								<option value=1>7</option>
+								<option value=0>8</option>
+							</select>
+							
+							<select name="DH" id="movement">
+								<option value=0>A</option>
+								<option value=1>B</option>
+								<option value=2>C</option>
+								<option value=3>D</option>
+								<option value=4>E</option>
+								<option value=5>F</option>
+								<option value=6>G</option>
+								<option value=7>H</option>
+							</select>
+						<input type="submit">
     </body>
 </html>
