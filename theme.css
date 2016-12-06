@@ -7,11 +7,7 @@ h1{
   text-align: center;
 }
 
-button {
-  height: 300;
-  width: 300;
-  background-image: url(https://www.sergent-tobogo.com/wp-content/uploads/2015/04/Im-so-happy-Final1-Copie.jpg);
-}
+
 
 @keyframes blink {
   0% {

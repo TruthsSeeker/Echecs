@@ -1,5 +1,5 @@
 //$ ceci est du jquery
-$( document ).ready(function() {
+/*$( document ).ready(function() {
 
 
     function konami(){
@@ -17,4 +17,4 @@ $( document ).ready(function() {
         konami();
     })
 
-});
+});*/

@@ -12,84 +12,184 @@
 
         <?php
 
+        /**
+         *
+         */
+        class piece
+        {
 
-        function pieceDisplay($GameBoard,$y,$x) {
-            switch ($GameBoard[$y][$x]) {
-                case 1 :
-                echo "WKing";
-                break;
-                case 2:
-                echo "WQueen";
-                break;
-                case 3 :
-                echo "WBishop";
-                break;
-                case 4 :
-                echo "WKnight";
-                break;
-                case 5 :
-                echo "WRook";
-                break;
-                case 6 :
-                echo "WPawn";
-                break;
-                case 7 :
-                echo "BKing";
-                break;
-                case 8 :
-                echo "BQueen";
-                break;
-                case 9 :
-                echo "BBishop";
-                break;
-                case 10 :
-                echo "BKnight";
-                break;
-                case 11 :
-                echo "BRook";
-                break;
-                case 12 :
-                echo "BPawn";
-                break;
-                default:
-                echo "";
+            public $color = "";
+
+            public $coordinates = array();
+
+            public $type = "";
+
+            function __construct($color, $type, $coordinates)
+            {
+                $this->color = $color;
+                foreach ($coordinates as $key => $value) {
+                    $this->coordinates[$key]= $value;
+                }
+                $this->type = $type;
+                global $GameBoard;
+                $GameBoard[$this->coordinates['y']][$this->coordinates['x']] = $this->color.$this->type;
+            }
+
+            function __destruct()
+            {
+                global $GameBoard;
+                $GameBoard[$this->coordinates['y']][$this->coordinates['x']] = 0;
             }
         }
 
-        function initialBoardState(&$GameBoard){
-            $GameBoard[0][0]=5;
-            $GameBoard[0][1]=4;
-            $GameBoard[0][2]=3;
-            $GameBoard[0][3]=1;
-            $GameBoard[0][4]=2;
-            $GameBoard[0][5]=3;
-            $GameBoard[0][6]=4;
-            $GameBoard[0][7]=5;
-            $GameBoard[1][0]=6;
-            $GameBoard[1][1]=6;
-            $GameBoard[1][2]=6;
-            $GameBoard[1][3]=6;
-            $GameBoard[1][4]=6;
-            $GameBoard[1][5]=6;
-            $GameBoard[1][6]=6;
-            $GameBoard[1][7]=6;
-            $GameBoard[7][0]=11;
-            $GameBoard[7][1]=10;
-            $GameBoard[7][2]=9;
-            $GameBoard[7][3]=7;
-            $GameBoard[7][4]=8;
-            $GameBoard[7][5]=9;
-            $GameBoard[7][6]=10;
-            $GameBoard[7][7]=11;
-            $GameBoard[6][0]=12;
-            $GameBoard[6][1]=12;
-            $GameBoard[6][2]=12;
-            $GameBoard[6][3]=12;
-            $GameBoard[6][4]=12;
-            $GameBoard[6][5]=12;
-            $GameBoard[6][6]=12;
-            $GameBoard[6][7]=12;
+        class knight extends piece
+        {
+
+            function legalMoves(){
+                global $GameBoard;
+                $legalMoves = array();
+                foreach ($GameBoard as $Ykey => $row) {
+                    foreach ($row as $Xkey => $column) {
+                        $distance = pow($Ykey-$this->coordinates['y'], 2) + pow($Xkey-$this->coordinates['x'], 2);
+                        if ($distance == 5) {//add a condition that the space must not be occupied by a friendly piece
+
+                            $legalMoves[]= array('x' => $Xkey , 'y' => $Ykey );
+                        }
+                    }
+                }
+
+                foreach ($legalMoves as $key => $value) {
+                    if ($GameBoard[$legalMoves[$key]['y']][$legalMoves[$key]['x']][0] == $this->color) {
+                        unset($legalMoves[$key]);
+                    }
+                }
+
+                return $legalMoves;
+            }
+
+            function __construct($color, $type, $coordinates)
+            {
+                parent::__construct($color, $type, $coordinates);
+            }
+
+            function __destruct()
+            {
+                parent::__destruct();
+            }
         }
+
+        class bishop extends piece
+        {
+
+            function legalMoves(){
+                global $GameBoard;
+                $legalMoves = array();
+                foreach ($GameBoard as $Ykey => $row) {
+                    foreach ($row as $Xkey => $column) {
+                        if ($Xkey - $this->coordinates['x'] == $Ykey - $this->coordinates['y']) {//needs to stop before friendly pieces and at ennemy pieces
+                            $legalMoves[] = array('x' => $Xkey , 'y' => $Ykey );
+                        }
+                    }
+                }
+                return $legalMoves;
+            }
+
+            function __construct($color, $type, $coordinates)
+            {
+                parent::__construct($color, $type, $coordinates);
+            }
+
+            function __destruct()
+            {
+                parent::__destruct();
+            }
+        }
+
+        class queen extends piece
+        {
+
+            function legalMoves(){
+                global $GameBoard;
+                $legalMoves = array();
+                foreach ($GameBoard as $Ykey => $row) {
+                    foreach ($row as $Xkey => $column) {
+                        if ($Xkey - $this->coordinates['x'] == $Ykey - $this->coordinates['y'] || $Xkey == $this->coordinates['x'] || $Ykey == $this->coordinates['y']) {//needs to stop before friendly pieces and at ennemy pieces
+                            $legalMoves[] = array('x' => $Xkey , 'y' => $Ykey );
+                        }
+                    }
+                }
+                return $legalMoves;
+            }
+
+            function __construct($color, $type, $coordinates)
+            {
+                parent::__construct($color, $type, $coordinates);
+            }
+
+            function __destruct()
+            {
+                parent::__destruct();
+            }
+        }
+
+        class king extends piece
+        {
+
+            function legalMoves(){
+                global $GameBoard;
+                $legalMoves = array();
+                foreach ($GameBoard as $Ykey => $row) {
+                    foreach ($row as $Xkey => $column) {
+                        $distance = pow($Ykey-$this->coordinates['y'], 2) + pow($Xkey-$this->coordinates['x'], 2);
+                        if ($distance == 1 || $distance == 2) {//add a condition that the space must not be occupied by a friendly piece
+
+                            $legalMoves[]= array('x' => $Xkey , 'y' => $Ykey );
+                        }
+                    }
+                }
+
+                return $legalMoves;
+            }
+
+            function __construct($color, $type, $coordinates)
+            {
+                parent::__construct($color, $type, $coordinates);
+            }
+
+            function __destruct()
+            {
+                parent::__destruct();
+            }
+        }
+
+        class rook extends piece
+        {
+            function legalMoves()
+            {
+                global $GameBoard;
+                $legalMoves = array();
+                foreach ($GameBoard as $Ykey => $row) {
+                    foreach ($row as $Xkey => $column) {
+                        if ($Xkey == $this->coordinates['x'] || $Ykey == $this->coordinates['y']){//needs to stop before friendly pieces and at ennemy pieces
+                            $legalMoves[] = array('x' => $Xkey , 'y' => $Ykey );
+                        }
+                    }
+                }
+                return $legalMoves;
+            }
+
+            function __construct($color, $type, $coordinates)
+            {
+                parent::__construct($color, $type, $coordinates);
+            }
+
+            function __destruct()
+            {
+                parent::__destruct();
+            }
+        }
+
+
 
         function Advance(&$GameBoard, $Y, $X){
             if ($Y+1>7){
@@ -101,20 +201,23 @@
             }
         }
 
-        function Save($GameBoard){
-            foreach ($GameBoard as $key => $value) {
-                echo serialize($GameBoard[$key]); #Regex to unserialize?
-            }
+        function Save($GameBoard, $db){
+            $buf= json_encode($GameBoard);
+            $insert= "INSERT INTO board (save)
+            VALUES ('$buf')";
+            $db->exec($insert);
         }
-
 
 
         $db= new PDO('mysql:host=localhost;dbname=chess', 'root', '');
         $GameBoard= array_fill(0, 8, array_fill(0, 8, 0));
 
-        initialBoardState($GameBoard);
-        advance($GameBoard, 1,0);
-        Save($GameBoard);
+        /*initialBoardState($GameBoard);
+        advance($GameBoard, 1,0);*/
+        $testRook= new rook('W', 'Rook', array('y' => 5, 'x' => 5));
+        $testKnight= new knight('W', 'Knight', array('y' => 6, 'x' => 7));
+        var_dump($testKnight->legalMoves());
+
         ?>
         <table>
             <?php foreach ($GameBoard as $key => $row): ?>
@@ -126,18 +229,18 @@
                         $BWcursor=1;
                     }?>
                     <?php foreach ($row as $key2 => $column): ?>
-                        <?php if($BWcursor==0): ?>
+                        <?php if(!$BWcursor): ?>
                             <td class= "blanc">
                                 <?php $BWcursor=1; ?>
-                                <?php if ($GameBoard[$key][$key2] != 0): ?>
-                                <img src="<?php pieceDisplay($GameBoard, $key, $key2);?>.png">
+                                <?php if ($GameBoard[$key][$key2] !== 0): ?>
+                                <img src="<?php echo $GameBoard[$key][$key2];?>.png">
                                 <?php endif; ?>
                             </td>
                         <?php else: ?>
                             <td class= "noir">
                                 <?php $BWcursor=0;?>
-                                <?php if ($GameBoard[$key][$key2] != 0): ?>
-                                <img src="<?php pieceDisplay($GameBoard, $key, $key2);?>.png">
+                                <?php if ($GameBoard[$key][$key2] !== 0): ?>
+                                <img src="<?php echo $GameBoard[$key][$key2];?>.png">
                                 <?php endif; ?>
                             </td>
                         <?php endif;?>
@@ -156,7 +259,7 @@
 								<option value=1>7</option>
 								<option value=0>8</option>
 							</select>
-							
+
 							<select name="PH" id="movement">
 								<option value=0>A</option>
 								<option value=1>B</option>
@@ -167,7 +270,7 @@
 								<option value=6>G</option>
 								<option value=7>H</option>
 							</select>
-			
+
 			<br>Destination: <select name="DV" id="movement">
 								<option value=7>1</option>
 								<option value=6>2</option>
@@ -178,7 +281,7 @@
 								<option value=1>7</option>
 								<option value=0>8</option>
 							</select>
-							
+
 							<select name="DH" id="movement">
 								<option value=0>A</option>
 								<option value=1>B</option>
@@ -190,5 +293,9 @@
 								<option value=7>H</option>
 							</select>
 						<input type="submit">
+            </form>
+            <br>
+            <br>
+
     </body>
 </html>
