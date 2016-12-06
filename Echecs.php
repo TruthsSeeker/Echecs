@@ -32,34 +32,35 @@
                 }
                 $this->type = $type;
                 global $GameBoard;
-                $GameBoard[$this->coordinates['y']][$this->coordinates['x']] = $this->color.$this->type;
+                $GameBoard[$this->coordinates['row']][$this->coordinates['column']] = $this->color.$this->type;
             }
 
             function __destruct()
             {
                 global $GameBoard;
-                $GameBoard[$this->coordinates['y']][$this->coordinates['x']] = 0;
+                $GameBoard[$this->coordinates['row']][$this->coordinates['column']] = 0;
             }
         }
 
         class knight extends piece
         {
 
-            function legalMoves(){
+            function legalMoves()
+            {
                 global $GameBoard;
                 $legalMoves = array();
                 foreach ($GameBoard as $Ykey => $row) {
                     foreach ($row as $Xkey => $column) {
-                        $distance = pow($Ykey-$this->coordinates['y'], 2) + pow($Xkey-$this->coordinates['x'], 2);
+                        $distance = pow($Ykey-$this->coordinates['row'], 2) + pow($Xkey-$this->coordinates['column'], 2);
                         if ($distance == 5) {//add a condition that the space must not be occupied by a friendly piece
 
-                            $legalMoves[]= array('x' => $Xkey , 'y' => $Ykey );
+                            $legalMoves[]= array('column' => $Xkey , 'row' => $Ykey );
                         }
                     }
                 }
 
                 foreach ($legalMoves as $key => $value) {
-                    if ($GameBoard[$legalMoves[$key]['y']][$legalMoves[$key]['x']][0] == $this->color) {
+                    if ($GameBoard[$legalMoves[$key]['row']][$legalMoves[$key]['column']][0] == $this->color) {
                         unset($legalMoves[$key]);
                     }
                 }
@@ -81,13 +82,14 @@
         class bishop extends piece
         {
 
-            function legalMoves(){
+            function legalMoves()
+            {
                 global $GameBoard;
                 $legalMoves = array();
                 foreach ($GameBoard as $Ykey => $row) {
                     foreach ($row as $Xkey => $column) {
-                        if ($Xkey - $this->coordinates['x'] == $Ykey - $this->coordinates['y']) {//needs to stop before friendly pieces and at ennemy pieces
-                            $legalMoves[] = array('x' => $Xkey , 'y' => $Ykey );
+                        if ($Xkey - $this->coordinates['column'] == $Ykey - $this->coordinates['row']) {//needs to stop before friendly pieces and at ennemy pieces
+                            $legalMoves[] = array('column' => $Xkey , 'row' => $Ykey );
                         }
                     }
                 }
@@ -108,13 +110,16 @@
         class queen extends piece
         {
 
-            function legalMoves(){
+            function legalMoves()
+            {
                 global $GameBoard;
                 $legalMoves = array();
                 foreach ($GameBoard as $Ykey => $row) {
                     foreach ($row as $Xkey => $column) {
-                        if ($Xkey - $this->coordinates['x'] == $Ykey - $this->coordinates['y'] || $Xkey == $this->coordinates['x'] || $Ykey == $this->coordinates['y']) {//needs to stop before friendly pieces and at ennemy pieces
-                            $legalMoves[] = array('x' => $Xkey , 'y' => $Ykey );
+                        if ($Xkey - $this->coordinates['column'] == $Ykey - $this->coordinates['row']
+                        || $Xkey == $this->coordinates['column']
+                        || $Ykey == $this->coordinates['row']) {//needs to stop before friendly pieces and at ennemy pieces
+                            $legalMoves[] = array('column' => $Xkey , 'row' => $Ykey );
                         }
                     }
                 }
@@ -135,15 +140,16 @@
         class king extends piece
         {
 
-            function legalMoves(){
+            function legalMoves()
+            {
                 global $GameBoard;
                 $legalMoves = array();
                 foreach ($GameBoard as $Ykey => $row) {
                     foreach ($row as $Xkey => $column) {
-                        $distance = pow($Ykey-$this->coordinates['y'], 2) + pow($Xkey-$this->coordinates['x'], 2);
+                        $distance = pow($Ykey-$this->coordinates['row'], 2) + pow($Xkey-$this->coordinates['column'], 2);
                         if ($distance == 1 || $distance == 2) {//add a condition that the space must not be occupied by a friendly piece
 
-                            $legalMoves[]= array('x' => $Xkey , 'y' => $Ykey );
+                            $legalMoves[]= array('column' => $Xkey , 'row' => $Ykey );
                         }
                     }
                 }
@@ -170,8 +176,8 @@
                 $legalMoves = array();
                 foreach ($GameBoard as $Ykey => $row) {
                     foreach ($row as $Xkey => $column) {
-                        if ($Xkey == $this->coordinates['x'] || $Ykey == $this->coordinates['y']){//needs to stop before friendly pieces and at ennemy pieces
-                            $legalMoves[] = array('x' => $Xkey , 'y' => $Ykey );
+                        if ($Xkey == $this->coordinates['column'] || $Ykey == $this->coordinates['row']){//needs to stop before friendly pieces and at ennemy pieces
+                            $legalMoves[] = array('column' => $Xkey , 'row' => $Ykey );
                         }
                     }
                 }
@@ -189,6 +195,95 @@
             }
         }
 
+
+        class pawn extends piece
+        {
+
+
+            function enPassant()
+            {
+                global $GameBoard;
+                $legalMoves= array();
+                if ($this->color == 'W')
+                {
+                    if ($this->coordinates['row'] == 4
+                    && $GameBoard[$this->coordinates['row']][$this->coordinates['column'] - 1][0] == 'BPawn'
+                    && $GameBoard[$this->coordinates['row'] - 1][$this->coordinates['column'] - 1][0] === 0)
+                    {
+                        $legalMoves[] = array('column' => $this->coordinates['column'] - 1, 'row' => $this->coordinates['row'] - 1);
+                    }
+
+                    if ($this->coordinates['row'] == 4
+                    && $GameBoard[$this->coordinates['row']][$this->coordinates['column'] + 1][0] == 'BPawn'
+                    && $GameBoard[$this->coordinates['row'] - 1][$this->coordinates['column'] + 1][0] === 0)
+                    {
+                        $legalMoves[] = array('column' => $this->coordinates['column'] + 1, 'row' => $this->coordinates['row'] - 1);
+                    }
+                }
+                else
+                {
+                    if ($this->coordinates['row'] == 3
+                    && $GameBoard[$this->coordinates['row']][$this->coordinates['column'] - 1][0] == 'WPawn'
+                    && $GameBoard[$this->coordinates['row'] + 1][$this->coordinates['column'] - 1][0] === 0)
+                    {
+                        $legalMoves[] = array('column' => $this->coordinates['column'] - 1, 'row' => $this->coordinates['row'] + 1);
+                    }
+
+                    if ($this->coordinates['row'] == 3
+                    && $GameBoard[$this->coordinates['row']][$this->coordinates['column'] + 1][0] !== 'WPawn'
+                    && $GameBoard[$this->coordinates['row'] + 1][$this->coordinates['column'] + 1] === 0)
+                    {
+                        $legalMoves[] = array('column' => $this->coordinates['column'] + 1, 'row' => $this->coordinates['row'] + 1);
+                    }
+                }
+                return $legalMoves;
+            }
+
+            function legalMoves()
+            {
+                global $GameBoard;
+                $legalMoves = array();
+                $legalMoves[] = $this->enPassant();
+                if ($this->startPosition == 'B')
+                {
+                    if ($GameBoard[$this->coordinates['row'] + 1][$this->coordinates['column']] === 0)
+                    {
+                        $legalMoves[] = array('column' => $this->coordinates['column'], 'row' => $this->coordinates['row'] + 1);
+                    }
+                    if ($GameBoard[$this->coordinates['row'] + 1][$this->coordinates['column']] === 0
+                    && $GameBoard[$this->coordinates['row'] + 2][$this->coordinates['column']] === 0
+                    && $this->coordinates['row'] == 2)
+                    {
+                        $legalMoves[] = array('column' => $this->coordinates['column'], 'row' => $this->coordinates['row'] + 2);
+                    }
+
+                }
+                else
+                {
+                    if ($GameBoard[$this->coordinates['row'] - 1][$this->coordinates['column']] === 0)
+                    {
+                        $legalMoves[] = array('column' => $this->coordinates['column'], 'row' => $this->coordinates['row'] - 1);
+                    }
+                    if ($GameBoard[$this->coordinates['row'] - 1][$this->coordinates['column']] === 0
+                    && $GameBoard[$this->coordinates['row'] - 2][$this->coordinates['column']] === 0
+                    && $this->coordinates['row'] == 6)
+                    {
+                        $legalMoves[] = array('column' => $this->coordinates['column'], 'row' => $this->coordinates['row'] - 2);
+                    }
+                }
+                return $legalMoves;
+            }
+
+            function __construct($color, $type, $coordinates)
+            {
+                parent::__construct($color, $type, $coordinates);
+            }
+
+            function __destruct()
+            {
+                parent::__destruct();
+            }
+        }
 
 
         function Advance(&$GameBoard, $Y, $X){
@@ -214,8 +309,8 @@
 
         /*initialBoardState($GameBoard);
         advance($GameBoard, 1,0);*/
-        $testRook= new rook('W', 'Rook', array('y' => 5, 'x' => 5));
-        $testKnight= new knight('W', 'Knight', array('y' => 6, 'x' => 7));
+        $testRook= new rook('W', 'Rook', array('row' => 5, 'column' => 5));
+        $testKnight= new knight('W', 'Knight', array('row' => 6, 'column' => 7));
         var_dump($testKnight->legalMoves());
 
         ?>
@@ -249,7 +344,18 @@
             <?php endforeach; ?>
         </table>
 		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" id="movement">
-			Point de Depart: <select name="PV" id="movement">
+			Point de Depart: <select name="PH" form="movement" required>
+                                <option value=0>A</option>
+                                <option value=1>B</option>
+                                <option value=2>C</option>
+                                <option value=3>D</option>
+                                <option value=4>E</option>
+                                <option value=5>F</option>
+                                <option value=6>G</option>
+                                <option value=7>H</option>
+                            </select>
+
+                            <select name="PV" form="movement" required>
 								<option value=7>1</option>
 								<option value=6>2</option>
 								<option value=5>3</option>
@@ -260,18 +366,21 @@
 								<option value=0>8</option>
 							</select>
 
-							<select name="PH" id="movement">
-								<option value=0>A</option>
-								<option value=1>B</option>
-								<option value=2>C</option>
-								<option value=3>D</option>
-								<option value=4>E</option>
-								<option value=5>F</option>
-								<option value=6>G</option>
-								<option value=7>H</option>
-							</select>
 
-			<br>Destination: <select name="DV" id="movement">
+
+			<br>
+            Destination:    <select name="DH" form="movement" required>
+                                <option value=0>A</option>
+                                <option value=1>B</option>
+                                <option value=2>C</option>
+                                <option value=3>D</option>
+                                <option value=4>E</option>
+                                <option value=5>F</option>
+                                <option value=6>G</option>
+                                <option value=7>H</option>
+                            </select>
+
+                            <select name="DV" form="movement" required>
 								<option value=7>1</option>
 								<option value=6>2</option>
 								<option value=5>3</option>
@@ -282,16 +391,7 @@
 								<option value=0>8</option>
 							</select>
 
-							<select name="DH" id="movement">
-								<option value=0>A</option>
-								<option value=1>B</option>
-								<option value=2>C</option>
-								<option value=3>D</option>
-								<option value=4>E</option>
-								<option value=5>F</option>
-								<option value=6>G</option>
-								<option value=7>H</option>
-							</select>
+
 						<input type="submit">
             </form>
             <br>
