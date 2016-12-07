@@ -1,5 +1,17 @@
+html, body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+}
+
+
 body {
-  background-color: #537237
+  background-color: #537237;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 h1{
@@ -32,6 +44,7 @@ img{
 table, th{
   border: 1px solid black;
   border-collapse: collapse;
+  border: none;
 
 }
 
@@ -40,70 +53,15 @@ td {
     width: 45px;
 }
 
+.legend{
+    height: 20px;
+    text-align: center;
+}
+
 .noir{
 background-color:black;
 }
 
 .blanc{
 background-color:white;
-}
-
-.WKing{
-background-image: url(WKing.png);
-background-color: transparent;
-}
-
-.WQueen{
-background-image: url(WQueen.png);
-background-color: transparent;
-}
-
-.WBishop{
-background-image: url(WBishop.png);
-background-color: transparent;
-}
-
-.WKnight{
-background-image: url(WKnight.png);
-background-color: transparent;
-}
-
-.WRook{
-background-image: url(WRook.png);
-background-color: transparent;
-}
-
-.WPawn{
-background-image: url(/WPawn.png);
-background-color: transparent;
-}
-
-.BKing{
-background-image: url(BKing.png);
-background-color: transparent;
-}
-
-.BQueen{
-background-image: url(BQueen.png);
-background-color: transparent;
-}
-
-.BBishop{
-background-image: url(BBishop.png);
-background-color: transparent;
-}
-
-.BKnight{
-background-image: url(BKnight.png);
-background-color: transparent;
-}
-
-.BRook{
-background-image: url(BRook.png);
-background-color: transparent;
-}
-
-.BPawn{
-background-image: url(BPawn.png);
-background-color: transparent;
 }
