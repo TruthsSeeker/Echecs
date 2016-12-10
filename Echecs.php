@@ -311,17 +311,21 @@
             $testKnight->move(array('row' => 4 , 'column' => 6));
 
             if( !empty($_POST))
-            {
-                global $GameBoard;
-                $startRow = (int)$_POST['startRow'];
-                $startColumn = (int)$_POST['startColumn'];
-                $targetRow = (int)$_POST['targetRow'];
-                $targetColumn = (int)$_POST['targetColumn'];
-                $GameBoard[$startRow][$startColumn]->move(array('row' => $targetRow, 'column' => $targetColumn));
-            }
+    		{
+    			global $GameBoard;
+    			$startRow = (int)$_POST['startRow'];
+    			$startColumn = (int)$_POST['startColumn'];
+    			$targetRow = (int)$_POST['targetRow'];
+    			$targetColumn = (int)$_POST['targetColumn'];
 
-
-        ?>
+    			if (gettype($GameBoard[$startRow][$startColumn]) == 'object'){
+    				$GameBoard[$startRow][$startColumn]->move(array('row' => $targetRow, 'column' => $targetColumn));
+    			}
+    			else
+    			{echo(json_encode(array('error'=>'Wadya do!!')));}
+    		}
+    	?>
+    <?php if(empty($_POST)):?>
         <table>
             <tr>
                 <td class='legend'></td>
@@ -421,3 +425,4 @@
 
     </body>
 </html>
+<?php endif;?>

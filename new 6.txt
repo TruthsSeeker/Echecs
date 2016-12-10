@@ -1,0 +1,5 @@
+voir redefinition de fonctions
+ecrire fonctions de trajectoire à la place du legalMoves() actuel
+changer d'opérateur par argument?
+passer pointeur vers gameboard dans constructeur
+mettre a jour prise en passant
