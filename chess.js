@@ -12,8 +12,6 @@ $( document ).ready(function() {
     var piece, startCoordinates, targetCoordinates;
 
     $('td').click(function(){
-        //konami();
-
 		step = !step;
 		if(step){
 			startCoordinates = $(this).attr("data-id").split(";");//chopper coordonnées de départ

@@ -1,4 +1,79 @@
-<!-- Classe pour ranger tout ce que je fais avec GameBoard? -->
+<?php
+
+    include "pieceChildClasses.php";
+    $bw = 0;
+    function Save($pieces, $db){
+        foreach ($pieces as $piece) {
+            $x = $piece->coordinates['column'];
+            $y = $piece->coordinates['row'];
+            //@TODO Pas répéter les query
+            $insert=   "INSERT INTO piece (alive, color, x, y, type)
+                        VALUES ('$piece->alive', '$piece->color', '$x', '$y', '$piece->type' )";
+            $db->exec($insert);
+        }
+    }
+
+    try {
+        $db= new PDO('mysql:host=localhost;dbname=chess', 'root', '');
+    } catch (Exception $db) {
+        echo "Database Connection error";
+    }
+
+    function setUp(){
+        return array(
+        new bishop('W', 'Bishop', array('row' => 7, 'column' => 2), 501),
+        new bishop('W', 'Bishop', array('row' => 7, 'column' => 5)),
+        new bishop('B', 'Bishop', array('row' => 0, 'column' => 2)),
+        new bishop('B', 'Bishop', array('row' => 0, 'column' => 5)),
+        new rook('W', 'Rook',array('row' => 7, 'column' => 0)),
+        new rook('W', 'Rook',array('row' => 7, 'column' => 7)),
+        new rook('B', 'Rook',array('row' => 0, 'column' => 0)),
+        new rook('B', 'Rook',array('row' => 0, 'column' => 7)),
+        new king('W', 'King',array('row' => 7, 'column' => 4)),
+        new king('B', 'King',array('row' => 0, 'column' => 4)),
+        new queen('W', 'Queen',array('row' => 7, 'column' => 3)),
+        new queen('B', 'Queen',array('row' => 0, 'column' => 3)),
+        new knight('W', 'Knight', array('row' => 7, 'column' => 1)),
+        new knight('W', 'Knight', array('row' => 7, 'column' => 6)),
+        new knight('B', 'Knight', array('row' => 0, 'column' => 1)),
+        new knight('B', 'Knight', array('row' => 0, 'column' => 6)),
+    	new pawn('W', 'Pawn', array('row' => 6, 'column' => 0)),
+        new pawn('W', 'Pawn', array('row' => 6, 'column' => 1)),
+        new pawn('W', 'Pawn', array('row' => 6, 'column' => 2)),
+        new pawn('W', 'Pawn', array('row' => 6, 'column' => 3)),
+        new pawn('W', 'Pawn', array('row' => 6, 'column' => 4)),
+        new pawn('W', 'Pawn', array('row' => 6, 'column' => 5)),
+        new pawn('W', 'Pawn', array('row' => 6, 'column' => 6)),
+        new pawn('W', 'Pawn', array('row' => 6, 'column' => 7)),
+        new pawn('B', 'Pawn', array('row' => 1, 'column' => 0)),
+        new pawn('B', 'Pawn', array('row' => 1, 'column' => 1)),
+        new pawn('B', 'Pawn', array('row' => 1, 'column' => 2)),
+        new pawn('B', 'Pawn', array('row' => 1, 'column' => 3)),
+        new pawn('B', 'Pawn', array('row' => 1, 'column' => 4)),
+        new pawn('B', 'Pawn', array('row' => 1, 'column' => 5)),
+        new pawn('B', 'Pawn', array('row' => 1, 'column' => 6)),
+        new pawn('B', 'Pawn', array('row' => 1, 'column' => 7))
+        );
+    }
+    $GameBoard = array_fill(0, 8, array_fill(0, 8, 0));
+    $pieces = setUp();
+    //Save($pieces, $db);
+    if( !empty($_POST))
+	{
+		global $GameBoard;
+		$startRow = (int)$_POST['startRow'];
+		$startColumn = (int)$_POST['startColumn'];
+		$targetRow = (int)$_POST['targetRow'];
+		$targetColumn = (int)$_POST['targetColumn'];
+
+		if (gettype($GameBoard[$startRow][$startColumn]) == 'object'){
+			$GameBoard[$startRow][$startColumn]->move(array('row' => $targetRow, 'column' => $targetColumn));
+		}
+		else
+		{echo(json_encode(array('error'=>'Wadya do!!')));}
+	}
+?>
+<?php if(empty($_POST)):?>
 <html>
 
 
@@ -9,50 +84,6 @@
     </head>
 
     <body>
-
-        <?php
-
-        include "var.php";
-
-        function Save($GameBoard, $db){
-            $buf= json_encode($GameBoard);
-            $insert= "INSERT INTO board (save)
-            VALUES ('$buf')";
-            $db->exec($insert);
-        }
-
-        try {
-            $db= new PDO('mysql:host=localhost;dbname=chess', 'root', '');
-        } catch (Exception $db) {
-            echo "Database Connection error";
-        }
-
-
-            $GameBoard = array_fill(0, 8, array_fill(0, 8, 0));
-            $testBishop = new queen('W', 'Bishop', array('row' => 5, 'column' => 5));
-            $testKnight = new knight('W', 'Knight', array('row' => 6, 'column' => 7));
-			$testPawn = new pawn('B', 'Pawn', array('row' => 3, 'column' => 3));
-            $testKnight->move(array('row' => 4 , 'column' => 6));
-			var_dump($testBishop->Gameboard);
-			echo "<br><br><br><br>v";
-			var_dump($testBishop->legalMoves());
-
-            if( !empty($_POST))
-    		{
-    			global $GameBoard;
-    			$startRow = (int)$_POST['startRow'];
-    			$startColumn = (int)$_POST['startColumn'];
-    			$targetRow = (int)$_POST['targetRow'];
-    			$targetColumn = (int)$_POST['targetColumn'];
-
-    			if (gettype($GameBoard[$startRow][$startColumn]) == 'object'){
-    				$GameBoard[$startRow][$startColumn]->move(array('row' => $targetRow, 'column' => $targetColumn));
-    			}
-    			else
-    			{echo(json_encode(array('error'=>'Wadya do!!')));}
-    		}
-    	?>
-    <?php if(empty($_POST)):?>
         <table>
             <tr>
                 <td class='legend'></td>
@@ -76,14 +107,14 @@
                     }?>
                     <?php foreach ($row as $key2 => $column): ?>
                         <?php if(!$BWcursor): ?>
-                            <td class= "blanc" data-id = "<?php echo $key; ?>.';'.<?php echo $key2; ?>">
+                            <td class= "blanc" data-id = "<?php echo $key.';'.$key2; ?>">
                                 <?php $BWcursor=1; ?>
                                 <?php if ($GameBoard[$key][$key2] !== 0): ?>
                                 <img src="<?php echo $GameBoard[$key][$key2]->color.$GameBoard[$key][$key2]->type;?>.png">
                                 <?php endif; ?>
                             </td>
                         <?php else: ?>
-                            <td class= "noir" data-id = "<?php echo $key; ?>.';'.<?php echo $key2; ?>">
+                            <td class= "noir" data-id = "<?php echo $key.';'.$key2; ?>">
                                 <?php $BWcursor=0;?>
                                 <?php if ($GameBoard[$key][$key2] !== 0): ?>
                                 <img src="<?php echo $GameBoard[$key][$key2]->color.$GameBoard[$key][$key2]->type;?>.png">
@@ -94,61 +125,7 @@
                 </tr>
             <?php endforeach; ?>
         </table>
-        <br>
-        <br>
-		<form action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" id="movement">
-			Point de Depart: <select name="startColumn" form="movement" required>
-                                <option value=0>A</option>
-                                <option value=1>B</option>
-                                <option value=2>C</option>
-                                <option value=3>D</option>
-                                <option value=4>E</option>
-                                <option value=5>F</option>
-                                <option value=6>G</option>
-                                <option value=7>H</option>
-                            </select>
 
-                            <select name="startRow" form="movement" required>
-								<option value=7>1</option>
-								<option value=6>2</option>
-								<option value=5>3</option>
-								<option value=4>4</option>
-								<option value=3>5</option>
-								<option value=2>6</option>
-								<option value=1>7</option>
-								<option value=0>8</option>
-							</select>
-
-
-
-			<br>
-            Destination:    <select name="targetColumn" form="movement" required>
-                                <option value=0>A</option>
-                                <option value=1>B</option>
-                                <option value=2>C</option>
-                                <option value=3>D</option>
-                                <option value=4>E</option>
-                                <option value=5>F</option>
-                                <option value=6>G</option>
-                                <option value=7>H</option>
-                            </select>
-
-                            <select name="targetRow" form="movement" required>
-								<option value=7>1</option>
-								<option value=6>2</option>
-								<option value=5>3</option>
-								<option value=4>4</option>
-								<option value=3>5</option>
-								<option value=2>6</option>
-								<option value=1>7</option>
-								<option value=0>8</option>
-							</select>
-
-
-						<input type="submit">
-            </form>
-            <br>
-            <br>
 
     </body>
 </html>
