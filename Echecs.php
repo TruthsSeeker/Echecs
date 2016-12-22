@@ -21,7 +21,7 @@
 
     function setUp(){
         return array(
-        new bishop('W', 'Bishop', array('row' => 7, 'column' => 2), 501),
+        new bishop('W', 'Bishop', array('row' => 7, 'column' => 2)),
         new bishop('W', 'Bishop', array('row' => 7, 'column' => 5)),
         new bishop('B', 'Bishop', array('row' => 0, 'column' => 2)),
         new bishop('B', 'Bishop', array('row' => 0, 'column' => 5)),
@@ -57,7 +57,7 @@
     }
     $GameBoard = array_fill(0, 8, array_fill(0, 8, 0));
     $pieces = setUp();
-    //Save($pieces, $db);
+    $GameBoard[6][0]->move(array('row' => 5, 'column' => 0));
     if( !empty($_POST))
 	{
 		global $GameBoard;

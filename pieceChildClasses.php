@@ -171,7 +171,7 @@
         {
             $legalMoves = array();
             $legalMoves[] = $this->enPassant();
-            if ($this->startPosition == 'B')
+            if ($this->color == 'B')
             {
                 if ($this->Gameboard[$this->coordinates['row'] + 1][$this->coordinates['column']] === 0)
                 {

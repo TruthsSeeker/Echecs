@@ -302,7 +302,14 @@ abstract class piece
                     }
                 }
             }
-
+            echo gettype($this->coordinates['column']);
+            global $db;
+            $x = $this->coordinates['column'];
+            $y = $this->coordinates['row'];
+            $query = "UPDATE piece
+                    SET x = $x, y = $y
+                    WHERE id = $this->id ;";
+            $db->exec($query);
         }
     }
 ?>
