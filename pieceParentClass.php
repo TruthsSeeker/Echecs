@@ -302,7 +302,6 @@ abstract class piece
                     }
                 }
             }
-            echo gettype($this->coordinates['column']);
             global $db;
             $x = $this->coordinates['column'];
             $y = $this->coordinates['row'];

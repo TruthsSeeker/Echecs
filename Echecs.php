@@ -110,14 +110,14 @@
                             <td class= "blanc" data-id = "<?php echo $key.';'.$key2; ?>">
                                 <?php $BWcursor=1; ?>
                                 <?php if ($GameBoard[$key][$key2] !== 0): ?>
-                                <img src="<?php echo $GameBoard[$key][$key2]->color.$GameBoard[$key][$key2]->type;?>.png">
+                                <img src="<?php echo 'img/'.$GameBoard[$key][$key2]->color.$GameBoard[$key][$key2]->type;?>.png">
                                 <?php endif; ?>
                             </td>
                         <?php else: ?>
                             <td class= "noir" data-id = "<?php echo $key.';'.$key2; ?>">
                                 <?php $BWcursor=0;?>
                                 <?php if ($GameBoard[$key][$key2] !== 0): ?>
-                                <img src="<?php echo $GameBoard[$key][$key2]->color.$GameBoard[$key][$key2]->type;?>.png">
+                                <img src="<?php echo 'img/'.$GameBoard[$key][$key2]->color.$GameBoard[$key][$key2]->type;?>.png">
                                 <?php endif; ?>
                             </td>
                         <?php endif;?>
