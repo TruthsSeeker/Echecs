@@ -18,13 +18,14 @@ abstract class piece
 
         public $trajectory = array ( 'up', 'down', 'left', 'right', 'upLeft', 'upRight', 'downLeft', 'downRight');
 
-        public function __construct($GameBoard, $color, $coordinates, $id = NULL)
+        public function __construct(&$GameBoard, $color, $coordinates, $id = NULL)
         {
             global $db;
             $this->coordinates = $coordinates;
             $this->color = $color;
-            $this->Gameboard = &$GameBoard;
-            $this->Gameboard[$coordinates['row']][$coordinates['column']] = $this;
+            $GameBoard[$coordinates['row']][$coordinates['column']] = $this;
+            $this->Gameboard = $GameBoard;
+            
             //var_dump($GameBoard);
             if ($id == NULL) {
                 $x = $this->coordinates['column'];
