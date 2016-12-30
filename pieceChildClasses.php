@@ -27,9 +27,10 @@
             return $legalMoves;
         }
 
-		function __construct($color, $type, $coordinates, $id = NULL)
+		function __construct($GameBoard, $color, $coordinates, $id = NULL)
         {
-            parent::__construct($color, $type, $coordinates, $id);
+            parent::__construct($GameBoard, $color, $coordinates, $id);
+            $this->type = 'Knight';
         }
 
     }
@@ -49,9 +50,10 @@
             return $legalMoves;
         }
 
-        function __construct($color, $type, $coordinates, $id = NULL)
+        function __construct($GameBoard, $color, $coordinates, $id = NULL)
         {
-            parent::__construct($color, $type, $coordinates, $id);
+            parent::__construct($GameBoard, $color, $coordinates, $id);
+            $this->type = 'Bishop';
         }
 
     }
@@ -70,9 +72,10 @@
             return $legalMoves;
         }
 
-		function __construct($color, $type, $coordinates, $id = NULL)
+		function __construct($GameBoard, $color, $coordinates, $id = NULL)
         {
-            parent::__construct($color, $type, $coordinates, $id);
+            parent::__construct($GameBoard, $color, $coordinates, $id);
+            $this->type = 'Queen';
         }
 
 
@@ -97,9 +100,10 @@
             return $legalMoves;
         }
 
-		function __construct($color, $type, $coordinates, $id = NULL)
+		function __construct($GameBoard, $color, $coordinates, $id = NULL)
         {
-            parent::__construct($color, $type, $coordinates, $id);
+            parent::__construct($GameBoard, $color, $coordinates, $id);
+            $this->type = 'King';
         }
 
     }
@@ -117,9 +121,10 @@
             return $legalMoves;
         }
 
-		function __construct($color, $type, $coordinates, $id = NULL)
+		function __construct($GameBoard, $color, $coordinates, $id = NULL)
         {
-            parent::__construct($color, $type, $coordinates, $id);
+            parent::__construct($GameBoard, $color, $coordinates, $id);
+            $this->type = 'Rook';
         }
 
     }
@@ -201,9 +206,10 @@
             return $legalMoves;
         }
 
-		function __construct($color, $type, $coordinates, $id = NULL)
+		function __construct($GameBoard, $color, $coordinates, $id = NULL)
         {
-            parent::__construct($color, $type, $coordinates, $id);
+            parent::__construct($GameBoard, $color, $coordinates, $id);
+            $this->type = 'Pawn';
         }
 
     }

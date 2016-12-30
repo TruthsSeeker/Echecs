@@ -8,7 +8,7 @@ $( document ).ready(function() {
 
 
 
-	var step = 0;
+    var step = 0;
     var piece, startCoordinates, targetCoordinates;
 
     $('td').click(function(){
