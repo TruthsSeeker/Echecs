@@ -16,6 +16,8 @@ class GameBoard {
     
     public $pieceID = array();
     
+    public $boardID;
+    
     public function setUp(){
         $buffer = array(
         new bishop($this->Board, 'W', array('row' => 7, 'column' => 2)),
@@ -51,7 +53,6 @@ class GameBoard {
         new pawn($this->Board, 'B', array('row' => 1, 'column' => 6)),
         new pawn($this->Board, 'B', array('row' => 1, 'column' => 7))
         );
-        var_dump($this->Board);
         foreach ($buffer as $value){
             $this->pieceID[] = $value->id;
         }
@@ -60,14 +61,35 @@ class GameBoard {
     function save($db)
     {
         $data = json_encode($this->pieceID);
-        $save = "INSERT INTO board (piece)
-                VALUES('$data')";
-        $db->exec($save);
+        if ($this->boardID === NULL)
+        {
+            $save = "INSERT INTO board (piece)
+                    VALUES('$data')";
+            $db->exec($save);
+            $getID = "SELECT LAST_INSERT_ID()";
+            $this->boardID = (int) $db->query($getID)->fetch()[0];
+        }
+        else
+        {
+            $save = "UPDATE board"
+                    . "SET piece = $data"
+                    . "WHERE id = $this->boardID";
+            $db->exec($save);
+        }
+    }
+    
+    function load($id)
+    {
+        global $db;
+        $fetch = "SELECT piece "
+                . "FROM board "
+                . "WHERE id = $id";
+        $this->pieceID = $db->query($fetch)->fetch()[0];
+        $this->boardID = $id;
     }
     
     
-    
-    public function __construct() {
+    function __construct() {
         $this->Board = array_fill(0, 8, array_fill(0, 8, 0));
     }
 }

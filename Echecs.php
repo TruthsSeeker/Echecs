@@ -23,6 +23,7 @@
     $GameBoard = new GameBoard();
     $GameBoard->setUp();
     $GameBoard->save($db);
+    $GameBoard->load(7);
     if( !empty($_POST))
 	{
 		global $GameBoard;

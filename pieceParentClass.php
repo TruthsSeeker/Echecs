@@ -26,7 +26,6 @@ abstract class piece
             $GameBoard[$coordinates['row']][$coordinates['column']] = $this;
             $this->Gameboard = $GameBoard;
             
-            //var_dump($GameBoard);
             if ($id == NULL) {
                 $x = $this->coordinates['column'];
                 $y = $this->coordinates['row'];
