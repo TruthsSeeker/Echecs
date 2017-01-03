@@ -18,19 +18,19 @@ abstract class piece
 
         public $trajectory = array ( 'up', 'down', 'left', 'right', 'upLeft', 'upRight', 'downLeft', 'downRight');
 
-        public function __construct(&$GameBoard, $color, $coordinates, $id = NULL)
+        public function __construct(&$GameBoard, $color, $coordinates, $alive, $id = NULL)
         {
             global $db;
             $this->coordinates = $coordinates;
             $this->color = $color;
+            $this->alive = $alive;
             $GameBoard[$coordinates['row']][$coordinates['column']] = $this;
             $this->Gameboard = $GameBoard;
             
             if ($id == NULL) {
-                $x = $this->coordinates['column'];
-                $y = $this->coordinates['row'];
-                $insert=   "INSERT INTO piece (alive, color, x, y, type)
-                            VALUES ('$this->alive', '$this->color', '$x', '$y', '$this->type' )";
+                $coordinates =  json_encode($this->coordinates);
+                $insert=   "INSERT INTO piece (alive, color, coordinates, type)
+                            VALUES ('$this->alive', '$this->color', '$coordinates', '$this->type' )";
                 $db->exec($insert);
                 $getID = "SELECT LAST_INSERT_ID()";
                 $this->id = (int)$db->query($getID)->fetch()[0]; // ->query() returns an object ->fetch() returns a table [0] gets the value
@@ -302,10 +302,9 @@ abstract class piece
                 }
             }
             global $db;
-            $x = $this->coordinates['column'];
-            $y = $this->coordinates['row'];
+            $coordinates = json_encode($this->coordinates);
             $query = "UPDATE piece
-                    SET x = $x, y = $y
+                    SET coordinates = $coordinates
                     WHERE id = $this->id ;";
             $db->exec($query);
         }
