@@ -7,19 +7,19 @@
         function legalMoves()
         {
             $legalMoves = array();
-            foreach ($this->Gameboard as $Ykey => $row) {
-                foreach ($row as $Xkey => $column) {
-                    $distance = pow($Ykey-$this->coordinates['row'], 2) + pow($Xkey-$this->coordinates['column'], 2);
+            foreach ($this->Gameboard as $Ykey => $ligne) {
+                foreach ($ligne as $Xkey => $colonne) {
+                    $distance = pow($Ykey-$this->coordinates['ligne'], 2) + pow($Xkey-$this->coordinates['colonne'], 2);
                     if ($distance == 5) {//add a condition that the space must not be occupied by a friendly piece
 
-                        $legalMoves[]= array('column' => $Xkey , 'row' => $Ykey );
+                        $legalMoves[]= array('colonne' => $Xkey , 'ligne' => $Ykey );
                     }
                 }
             }
 
             foreach ($legalMoves as $key => $value) {
-                if (gettype($this->Gameboard[$legalMoves[$key]['row']][$legalMoves[$key]['column']]) == 'object'
-                && $this->Gameboard[$legalMoves[$key]['row']][$legalMoves[$key]['column']]->color == $this->color) {
+                if (gettype($this->Gameboard[$legalMoves[$key]['ligne']][$legalMoves[$key]['colonne']]) == 'object'
+                && $this->Gameboard[$legalMoves[$key]['ligne']][$legalMoves[$key]['colonne']]->color == $this->color) {
                     unset($legalMoves[$key]);
                 }
             }
@@ -87,12 +87,12 @@
         function legalMoves()
         {
             $legalMoves = array();
-            foreach ($this->Gameboard as $Ykey => $row) {
-                foreach ($row as $Xkey => $column) {
-                    $distance = pow($Ykey-$this->coordinates['row'], 2) + pow($Xkey-$this->coordinates['column'], 2);
+            foreach ($this->Gameboard as $Ykey => $ligne) {
+                foreach ($ligne as $Xkey => $colonne) {
+                    $distance = pow($Ykey-$this->coordinates['ligne'], 2) + pow($Xkey-$this->coordinates['colonne'], 2);
                     if ($distance == 1 || $distance == 2) {//add a condition that the space must not be occupied by a friendly piece
 
-                        $legalMoves[]= array('column' => $Xkey , 'row' => $Ykey );
+                        $legalMoves[]= array('colonne' => $Xkey , 'ligne' => $Ykey );
                     }
                 }
             }
@@ -139,34 +139,34 @@
             $legalMoves= array();
             if ($this->color == 'W')
             {
-                if ($this->coordinates['row'] == 4
-                && $this->Gameboard[$this->coordinates['row']][$this->coordinates['column'] - 1][0] == 'BPawn'
-                && $this->Gameboard[$this->coordinates['row'] - 1][$this->coordinates['column'] - 1][0] === 0)
+                if ($this->coordinates['ligne'] == 4
+                && $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] - 1][0] == 'BPawn'
+                && $this->Gameboard[$this->coordinates['ligne'] - 1][$this->coordinates['colonne'] - 1][0] === 0)
                 {
-                    $legalMoves[] = array('column' => $this->coordinates['column'] - 1, 'row' => $this->coordinates['row'] - 1);
+                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - 1, 'ligne' => $this->coordinates['ligne'] - 1);
                 }
 
-                if ($this->coordinates['row'] == 4
-                && $this->Gameboard[$this->coordinates['row']][$this->coordinates['column'] + 1][0] == 'BPawn'
-                && $this->Gameboard[$this->coordinates['row'] - 1][$this->coordinates['column'] + 1][0] === 0)
+                if ($this->coordinates['ligne'] == 4
+                && $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] + 1][0] == 'BPawn'
+                && $this->Gameboard[$this->coordinates['ligne'] - 1][$this->coordinates['colonne'] + 1][0] === 0)
                 {
-                    $legalMoves[] = array('column' => $this->coordinates['column'] + 1, 'row' => $this->coordinates['row'] - 1);
+                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + 1, 'ligne' => $this->coordinates['ligne'] - 1);
                 }
             }
             else
             {
-                if ($this->coordinates['row'] == 3
-                && $this->Gameboard[$this->coordinates['row']][$this->coordinates['column'] - 1][0] == 'WPawn'
-                && $this->Gameboard[$this->coordinates['row'] + 1][$this->coordinates['column'] - 1][0] === 0)
+                if ($this->coordinates['ligne'] == 3
+                && $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] - 1][0] == 'WPawn'
+                && $this->Gameboard[$this->coordinates['ligne'] + 1][$this->coordinates['colonne'] - 1][0] === 0)
                 {
-                    $legalMoves[] = array('column' => $this->coordinates['column'] - 1, 'row' => $this->coordinates['row'] + 1);
+                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - 1, 'ligne' => $this->coordinates['ligne'] + 1);
                 }
 
-                if ($this->coordinates['row'] == 3
-                && $this->Gameboard[$this->coordinates['row']][$this->coordinates['column'] + 1][0] !== 'WPawn'
-                && $this->Gameboard[$this->coordinates['row'] + 1][$this->coordinates['column'] + 1] === 0)
+                if ($this->coordinates['ligne'] == 3
+                && $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] + 1][0] !== 'WPawn'
+                && $this->Gameboard[$this->coordinates['ligne'] + 1][$this->coordinates['colonne'] + 1] === 0)
                 {
-                    $legalMoves[] = array('column' => $this->coordinates['column'] + 1, 'row' => $this->coordinates['row'] + 1);
+                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + 1, 'ligne' => $this->coordinates['ligne'] + 1);
                 }
             }
             return $legalMoves;
@@ -178,29 +178,29 @@
             $legalMoves[] = $this->enPassant();
             if ($this->color == 'B')
             {
-                if ($this->Gameboard[$this->coordinates['row'] + 1][$this->coordinates['column']] === 0)
+                if ($this->Gameboard[$this->coordinates['ligne'] + 1][$this->coordinates['colonne']] === 0)
                 {
-                    $legalMoves[] = array('column' => $this->coordinates['column'], 'row' => $this->coordinates['row'] + 1);
+                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'], 'ligne' => $this->coordinates['ligne'] + 1);
                 }
-                if ($this->Gameboard[$this->coordinates['row'] + 1][$this->coordinates['column']] === 0
-                && $this->Gameboard[$this->coordinates['row'] + 2][$this->coordinates['column']] === 0
-                && $this->coordinates['row'] == 2)
+                if ($this->Gameboard[$this->coordinates['ligne'] + 1][$this->coordinates['colonne']] === 0
+                && $this->Gameboard[$this->coordinates['ligne'] + 2][$this->coordinates['colonne']] === 0
+                && $this->coordinates['ligne'] == 2)
                 {
-                    $legalMoves[] = array('column' => $this->coordinates['column'], 'row' => $this->coordinates['row'] + 2);
+                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'], 'ligne' => $this->coordinates['ligne'] + 2);
                 }
 
             }
             else
             {
-                if ($this->Gameboard[$this->coordinates['row'] - 1][$this->coordinates['column']] === 0)
+                if ($this->Gameboard[$this->coordinates['ligne'] - 1][$this->coordinates['colonne']] === 0)
                 {
-                    $legalMoves[] = array('column' => $this->coordinates['column'], 'row' => $this->coordinates['row'] - 1);
+                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'], 'ligne' => $this->coordinates['ligne'] - 1);
                 }
-                if ($this->Gameboard[$this->coordinates['row'] - 1][$this->coordinates['column']] === 0
-                && $this->Gameboard[$this->coordinates['row'] - 2][$this->coordinates['column']] === 0
-                && $this->coordinates['row'] == 6)
+                if ($this->Gameboard[$this->coordinates['ligne'] - 1][$this->coordinates['colonne']] === 0
+                && $this->Gameboard[$this->coordinates['ligne'] - 2][$this->coordinates['colonne']] === 0
+                && $this->coordinates['ligne'] == 6)
                 {
-                    $legalMoves[] = array('column' => $this->coordinates['column'], 'row' => $this->coordinates['row'] - 2);
+                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'], 'ligne' => $this->coordinates['ligne'] - 2);
                 }
             }
             return $legalMoves;

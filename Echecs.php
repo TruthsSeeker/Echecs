@@ -3,16 +3,6 @@
     include "pieceChildClasses.php";
     include "GameBoard.php";
     $bw = 0;
-    function Save($pieces, $db){
-        foreach ($pieces as $piece) {
-            $x = $piece->coordinates['column'];
-            $y = $piece->coordinates['row'];
-            //@TODO Pas répéter les query
-            $insert=   "INSERT INTO piece (alive, color, x, y, type)
-                        VALUES ('$piece->alive', '$piece->color', '$x', '$y', '$piece->type' )";
-            $db->exec($insert);
-        }
-    }
 
     try {
         $db= new PDO('mysql:host=localhost;dbname=chess', 'root', '');
@@ -21,11 +11,11 @@
     }
 
     $GameBoard = new GameBoard();
-    $GameBoard->newGame();
-    $GameBoard->save($db);
-    $GameBoard->setUpFromLoad(7);
+    $GameBoard->setUpFromLoad(5);
+
     if( !empty($_POST))
 	{
+
 		global $GameBoard;
 		$startRow = (int)$_POST['startRow'];
 		$startColumn = (int)$_POST['startColumn'];
@@ -33,7 +23,7 @@
 		$targetColumn = (int)$_POST['targetColumn'];
 
 		if (gettype($GameBoard->Board[$startRow][$startColumn]) == 'object'){
-			$GameBoard->Board[$startRow][$startColumn]->move(array('row' => $targetRow, 'column' => $targetColumn));
+			$GameBoard->Board[$startRow][$startColumn]->move(array('ligne' => $targetRow, 'colonne' => $targetColumn));
 		}
 		else
 		{echo(json_encode(array('error'=>'Wadya do!!')));}
@@ -62,7 +52,7 @@
                 <td class='legend'>G</td>
                 <td class='legend'>H</td>
 
-            <?php foreach ($GameBoard->Board as $key => $row): ?>
+            <?php foreach ($GameBoard->Board as $key => $ligne): ?>
                 <tr>
                     <td class="legend"><?php echo 8-$key; ?></td>
                     <?php if ($key%2==0){
@@ -71,7 +61,7 @@
                     else{
                         $BWcursor=1;
                     }?>
-                    <?php foreach ($row as $key2 => $column): ?>
+                    <?php foreach ($ligne as $key2 => $colonne): ?>
                         <?php if(!$BWcursor): ?>
                             <td class= "blanc" data-id = "<?php echo $key.';'.$key2; ?>">
                                 <?php $BWcursor=1; ?>

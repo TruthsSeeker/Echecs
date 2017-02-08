@@ -19,84 +19,100 @@ class GameBoard {
     public $boardID;
     
     public $initialBoardState = [
-        ['color' => 'W', 'coordinates' => ['row' => 6, 'column' => 0], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'W', 'coordinates' => ['row' => 6, 'column' => 1], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'W', 'coordinates' => ['row' => 6, 'column' => 2], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'W', 'coordinates' => ['row' => 6, 'column' => 3], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'W', 'coordinates' => ['row' => 6, 'column' => 4], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'W', 'coordinates' => ['row' => 6, 'column' => 5], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'W', 'coordinates' => ['row' => 6, 'column' => 6], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'W', 'coordinates' => ['row' => 6, 'column' => 7], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'B', 'coordinates' => ['row' => 1, 'column' => 0], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'B', 'coordinates' => ['row' => 1, 'column' => 1], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'B', 'coordinates' => ['row' => 1, 'column' => 2], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'B', 'coordinates' => ['row' => 1, 'column' => 3], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'B', 'coordinates' => ['row' => 1, 'column' => 4], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'B', 'coordinates' => ['row' => 1, 'column' => 5], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'B', 'coordinates' => ['row' => 1, 'column' => 6], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'B', 'coordinates' => ['row' => 1, 'column' => 7], 'alive' => 1, 'type' => 'Pawn'],
-        ['color' => 'B', 'coordinates' => ['row' => 0, 'column' => 7], 'alive' => 1, 'type' => 'Rook'],
-        ['color' => 'B', 'coordinates' => ['row' => 0, 'column' => 0], 'alive' => 1, 'type' => 'Rook'],
-        ['color' => 'W', 'coordinates' => ['row' => 7, 'column' => 7], 'alive' => 1, 'type' => 'Rook'],
-        ['color' => 'W', 'coordinates' => ['row' => 7, 'column' => 0], 'alive' => 1, 'type' => 'Rook'],
-        ['color' => 'B', 'coordinates' => ['row' => 0, 'column' => 6], 'alive' => 1, 'type' => 'Knight'],
-        ['color' => 'B', 'coordinates' => ['row' => 0, 'column' => 1], 'alive' => 1, 'type' => 'Knight'],
-        ['color' => 'W', 'coordinates' => ['row' => 7, 'column' => 6], 'alive' => 1, 'type' => 'Knight'],
-        ['color' => 'W', 'coordinates' => ['row' => 7, 'column' => 1], 'alive' => 1, 'type' => 'Knight'],
-        ['color' => 'B', 'coordinates' => ['row' => 0, 'column' => 5], 'alive' => 1, 'type' => 'Bishop'],
-        ['color' => 'B', 'coordinates' => ['row' => 0, 'column' => 2], 'alive' => 1, 'type' => 'Bishop'],
-        ['color' => 'W', 'coordinates' => ['row' => 7, 'column' => 5], 'alive' => 1, 'type' => 'Bishop'],
-        ['color' => 'W', 'coordinates' => ['row' => 7, 'column' => 2], 'alive' => 1, 'type' => 'Bishop'],
-        ['color' => 'B', 'coordinates' => ['row' => 0, 'column' => 4], 'alive' => 1, 'type' => 'King'],
-        ['color' => 'B', 'coordinates' => ['row' => 0, 'column' => 3], 'alive' => 1, 'type' => 'Queen'],
-        ['color' => 'W', 'coordinates' => ['row' => 7, 'column' => 4], 'alive' => 1, 'type' => 'King'],
-        ['color' => 'W', 'coordinates' => ['row' => 7, 'column' => 3], 'alive' => 1, 'type' => 'Queen'],
+        ['color' => 'W', 'ligne' => 6, 'colonne' => 0, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'W', 'ligne' => 6, 'colonne' => 1, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'W', 'ligne' => 6, 'colonne' => 2, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'W', 'ligne' => 6, 'colonne' => 3, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'W', 'ligne' => 6, 'colonne' => 4, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'W', 'ligne' => 6, 'colonne' => 5, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'W', 'ligne' => 6, 'colonne' => 6, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'W', 'ligne' => 6, 'colonne' => 7, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'B', 'ligne' => 1, 'colonne' => 0, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'B', 'ligne' => 1, 'colonne' => 1, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'B', 'ligne' => 1, 'colonne' => 2, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'B', 'ligne' => 1, 'colonne' => 3, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'B', 'ligne' => 1, 'colonne' => 4, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'B', 'ligne' => 1, 'colonne' => 5, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'B', 'ligne' => 1, 'colonne' => 6, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'B', 'ligne' => 1, 'colonne' => 7, 'alive' => 1, 'type' => 'Pawn'],
+        ['color' => 'B', 'ligne' => 0, 'colonne' => 7, 'alive' => 1, 'type' => 'Rook'],
+        ['color' => 'B', 'ligne' => 0, 'colonne' => 0, 'alive' => 1, 'type' => 'Rook'],
+        ['color' => 'W', 'ligne' => 7, 'colonne' => 7, 'alive' => 1, 'type' => 'Rook'],
+        ['color' => 'W', 'ligne' => 7, 'colonne' => 0, 'alive' => 1, 'type' => 'Rook'],
+        ['color' => 'B', 'ligne' => 0, 'colonne' => 6, 'alive' => 1, 'type' => 'Knight'],
+        ['color' => 'B', 'ligne' => 0, 'colonne' => 1, 'alive' => 1, 'type' => 'Knight'],
+        ['color' => 'W', 'ligne' => 7, 'colonne' => 6, 'alive' => 1, 'type' => 'Knight'],
+        ['color' => 'W', 'ligne' => 7, 'colonne' => 1, 'alive' => 1, 'type' => 'Knight'],
+        ['color' => 'B', 'ligne' => 0, 'colonne' => 5, 'alive' => 1, 'type' => 'Bishop'],
+        ['color' => 'B', 'ligne' => 0, 'colonne' => 2, 'alive' => 1, 'type' => 'Bishop'],
+        ['color' => 'W', 'ligne' => 7, 'colonne' => 5, 'alive' => 1, 'type' => 'Bishop'],
+        ['color' => 'W', 'ligne' => 7, 'colonne' => 2, 'alive' => 1, 'type' => 'Bishop'],
+        ['color' => 'B', 'ligne' => 0, 'colonne' => 4, 'alive' => 1, 'type' => 'King'],
+        ['color' => 'B', 'ligne' => 0, 'colonne' => 3, 'alive' => 1, 'type' => 'Queen'],
+        ['color' => 'W', 'ligne' => 7, 'colonne' => 4, 'alive' => 1, 'type' => 'King'],
+        ['color' => 'W', 'ligne' => 7, 'colonne' => 3, 'alive' => 1, 'type' => 'Queen'],
     ];
-    
+
     function newGame(){
         
         foreach ($this->initialBoardState as $value){
-            $buf = $this->pieceCreator($value);
-
+            $this->pieceCreator($value);
         }
     }
     
-    function setUpFromLoad($id)
+    function setUpFromLoad($id = NULL)
     {
-        $this->load($id);
-        $pieceArray = json_decode($this->pieceID);
-        $pieces = [];
-        foreach ($pieceArray as $value)
+        if ($id == NULL)
+        {
+             $this->newGame();
+             return;
+        }
+        /*foreach ($pieceArray as $value)
         {
             global $db;
             $pieceLoader = "SELECT color, type, alive, coordinates "
                     . "FROM `piece`"
                     . "WHERE id = $value";
-            $pieces[] = $db->query($pieceLoader)->fetch();
+            $pieces= $db->query($pieceLoader)->fetch();
+            $this->pieceCreator($pieces);
+        }*/
+
+        $query = "SELECT * FROM piece
+                  WHERE gameboard = '$id'";
+        global $db;
+        $pieces = $db->query($query)->fetchAll();
+
+        foreach ($pieces as $piece) {
+            $this->pieceCreator($piece);
         }
-        
     }
     
     function pieceCreator($pieceInfo)
     {
         switch($pieceInfo['type']){
             case 'Pawn':
-                return new pawn($this->Board, $pieceInfo['color'], $pieceInfo['coordinates'], $pieceInfo['alive'], (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
+                return new pawn($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
+                    (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
                 
             case 'Rook':
-                return new rook($this->Board, $pieceInfo['color'], $pieceInfo['coordinates'], $pieceInfo['alive'], (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
+                return new rook($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
+                    (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
                 
             case 'Knight':
-                return new knight($this->Board, $pieceInfo['color'], $pieceInfo['coordinates'], $pieceInfo['alive'], (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
+                return new knight($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
+                    (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
                 
             case 'Bishop':
-                return new bishop($this->Board, $pieceInfo['color'], $pieceInfo['coordinates'], $pieceInfo['alive'], (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
+                return new bishop($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
+                    (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
 
             case 'King':
-                return new king($this->Board, $pieceInfo['color'], $pieceInfo['coordinates'], $pieceInfo['alive'], (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
+                return new king($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
+                    (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
                 
             case 'Queen':
-                return new queen($this->Board, $pieceInfo['color'], $pieceInfo['coordinates'], $pieceInfo['alive'], (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
+                return new queen($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
+                    (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
         }
     }
     
@@ -120,18 +136,23 @@ class GameBoard {
         }
     }
     
-    function load($id)
-    {
-        global $db;
-        $fetch = "SELECT piece "
-                . "FROM board "
-                . "WHERE id = $id";
-        $this->pieceID = $db->query($fetch)->fetch()[0];
-        $this->boardID = $id;
-    }
-    
-    
-    function __construct() {
+    function __construct($id = NULL) {
         $this->Board = array_fill(0, 8, array_fill(0, 8, 0));
+        global $db;
+
+        if ( $id == NULL)
+        {
+            $query = "SELECT gameboard from piece
+                       ORDER BY gameboard desc limit 1";
+            $lastId = (int) $db->query($query)->fetch()[0];
+            //var_dump($lastId);
+            $this->boardID = ++$lastId;
+
+        }
+
+        else
+        {
+            $this->boardID = $id;
+        }
     }
 }
