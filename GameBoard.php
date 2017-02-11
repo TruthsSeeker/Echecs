@@ -59,7 +59,10 @@ class GameBoard {
             $this->pieceCreator($value);
         }
     }
-    
+
+    /**
+     * @param null $id
+     */
     function setUpFromLoad($id = NULL)
     {
         if ($id == NULL)
@@ -87,7 +90,7 @@ class GameBoard {
         }
     }
     
-    function pieceCreator($pieceInfo)
+    function pieceCreator($pieceInfo)// Soit c'est la ternaire ici qui marche pas soit c'est dans pieceParentClass.php __construct()
     {
         switch($pieceInfo['type']){
             case 'Pawn':

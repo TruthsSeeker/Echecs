@@ -26,8 +26,8 @@ abstract class piece
             $this->alive = $alive;
             $GameBoard->Board[$this->coordinates['ligne']][$this->coordinates['colonne']] = $this;
             $this->Gameboard = &$GameBoard->Board;
-            if ($id == NULL) {
-                $coordinates =  json_encode($this->coordinates);
+            if ($id == NULL) { // ce serait là où la condition ne serait pas respectée correctement
+
                 $insert=   "INSERT INTO piece (alive, color, type, gameboard, ligne, colonne)
                             VALUES ('$this->alive', '$this->color', '$this->type', '$GameBoard->boardID', '$ligne', '$colonne')";
                 $db->exec($insert);
@@ -271,7 +271,7 @@ abstract class piece
         function move($destination)
         {
             //global $bw;
-
+            echo "console.log(coucou)";
             $moveBuffer = $this->legalMoves();
             /*$bw = !$bw;
             if (($this->color == 'W' && !$bw) or ($this->color == 'B' && $bw))
@@ -294,10 +294,10 @@ abstract class piece
                 }
             }
             global $db;
-            $coordinates = json_encode($this->coordinates);
-            //var_dump($this->coordinates);
+            $ligne = $this->coordinates['ligne'];
+            $colonne = $this->coordinates['colonne'];
             $query = "UPDATE piece
-                    SET coordinates = $coordinates
+                    SET ligne = $ligne, colonne = $colonne
                     WHERE id = $this->id ;";
             $db->exec($query);
         }

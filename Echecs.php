@@ -10,7 +10,7 @@
         echo "Database Connection error";
     }
 
-    $GameBoard = new GameBoard();
+    $GameBoard = new GameBoard(5);
     $GameBoard->setUpFromLoad(5);
 
     if( !empty($_POST))
