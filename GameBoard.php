@@ -92,30 +92,34 @@ class GameBoard {
     
     function pieceCreator($pieceInfo)// Soit c'est la ternaire ici qui marche pas soit c'est dans pieceParentClass.php __construct()
     {
+        $pieceID = isset($pieceInfo['id']) ? $pieceInfo['id'] : NULL;
+        var_dump($pieceID);
+
+
         switch($pieceInfo['type']){
             case 'Pawn':
                 return new pawn($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
-                    (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
-                
+                    $pieceID);
+                 
             case 'Rook':
                 return new rook($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
-                    (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
+                    $pieceID);
                 
             case 'Knight':
                 return new knight($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
-                    (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
+                    $pieceID);
                 
             case 'Bishop':
                 return new bishop($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
-                    (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
+                    $pieceID);
 
             case 'King':
                 return new king($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
-                    (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
+                    $pieceID);
                 
             case 'Queen':
                 return new queen($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
-                    (!isset($pieceInfo['id']))? NULL: $pieceInfo['id']);
+                    $pieceID);
         }
     }
     

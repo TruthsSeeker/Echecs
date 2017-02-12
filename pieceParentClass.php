@@ -26,7 +26,8 @@ abstract class piece
             $this->alive = $alive;
             $GameBoard->Board[$this->coordinates['ligne']][$this->coordinates['colonne']] = $this;
             $this->Gameboard = &$GameBoard->Board;
-            if ($id == NULL) { // ce serait là où la condition ne serait pas respectée correctement
+            var_dump($id);
+            if ($id == NULL) {
 
                 $insert=   "INSERT INTO piece (alive, color, type, gameboard, ligne, colonne)
                             VALUES ('$this->alive', '$this->color', '$this->type', '$GameBoard->boardID', '$ligne', '$colonne')";
