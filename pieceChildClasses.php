@@ -113,7 +113,7 @@
         function legalMoves()
         {
             $legalMoves = array();
-            for ($i=0; $i<=4; $i++){
+            for ($i=0; $i<=3; $i++){
 				foreach (call_user_func(array($this, $this->trajectory[$i])) as $legalMove){
 					$legalMoves[] = $legalMove;
 				}

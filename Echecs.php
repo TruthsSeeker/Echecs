@@ -10,8 +10,8 @@
         echo "Database Connection error";
     }
 
-    $GameBoard = new GameBoard(5);
-    $GameBoard->setUpFromLoad(5);
+    $GameBoard = new GameBoard($_GET['gameboard']);
+    $GameBoard->setUpFromLoad($_GET['gameboard']);
 
     if( !empty($_POST))
 	{
@@ -40,6 +40,20 @@
     </head>
 
     <body>
+        <div class="dedW">
+            <table>
+
+            <?php foreach ($GameBoard->dedW as $piece):?>
+                <tr>
+                    <td>
+                        <img src="<?php echo 'img/'.$piece;?>.png">
+                    </td>
+                </tr>
+                <?php endforeach;?>
+            </table>
+        </div>
+
+        <div class="boardContainer">
         <table>
             <tr>
                 <td class='legend'></td>
@@ -81,7 +95,20 @@
                 </tr>
             <?php endforeach; ?>
         </table>
+        </div>
 
+        <div class="dedB">
+            <table>
+
+                <?php foreach ($GameBoard->dedB as $piece):?>
+                    <tr>
+                        <td>
+                            <img src="<?php echo 'img/'.$piece;?>.png">
+                        </td>
+                    </tr>
+                <?php endforeach;?>
+            </table>
+        </div>
 
     </body>
 </html>

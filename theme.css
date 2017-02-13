@@ -65,3 +65,13 @@ background-color:black;
 .blanc{
 background-color:white;
 }
+
+.dedB, .dedW{
+    float: left;
+    margin: 50px;
+}
+
+.boardContainer{
+    float: left;
+    margin: 50px;
+}

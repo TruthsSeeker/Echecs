@@ -17,6 +17,10 @@ class GameBoard {
     public $pieceID = array();
     
     public $boardID;
+
+    public $dedW = array();
+
+    public $dedB = array();
     
     public $initialBoardState = [
         ['color' => 'W', 'ligne' => 6, 'colonne' => 0, 'alive' => 1, 'type' => 'Pawn'],
@@ -93,37 +97,44 @@ class GameBoard {
     function pieceCreator($pieceInfo)// Soit c'est la ternaire ici qui marche pas soit c'est dans pieceParentClass.php __construct()
     {
         $pieceID = isset($pieceInfo['id']) ? $pieceInfo['id'] : NULL;
-        var_dump($pieceID);
 
+        if ($pieceInfo['alive'] == 1) {
+            switch ($pieceInfo['type']) {
+                case 'Pawn':
+                    return new pawn($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
+                        $pieceID);
 
-        switch($pieceInfo['type']){
-            case 'Pawn':
-                return new pawn($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
-                    $pieceID);
-                 
-            case 'Rook':
-                return new rook($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
-                    $pieceID);
-                
-            case 'Knight':
-                return new knight($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
-                    $pieceID);
-                
-            case 'Bishop':
-                return new bishop($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
-                    $pieceID);
+                case 'Rook':
+                    return new rook($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
+                        $pieceID);
 
-            case 'King':
-                return new king($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
-                    $pieceID);
-                
-            case 'Queen':
-                return new queen($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
-                    $pieceID);
+                case 'Knight':
+                    return new knight($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
+                        $pieceID);
+
+                case 'Bishop':
+                    return new bishop($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
+                        $pieceID);
+
+                case 'King':
+                    return new king($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
+                        $pieceID);
+
+                case 'Queen':
+                    return new queen($this, $pieceInfo['color'], $pieceInfo['ligne'], $pieceInfo['colonne'], $pieceInfo['alive'],
+                        $pieceID);
+            }
+        }
+
+        else{
+            if ($pieceInfo['color'] == 'B')
+                $this->dedB[] = $pieceInfo['color'].$pieceInfo['type'];
+            else
+                $this->dedW[] = $pieceInfo['color'].$pieceInfo['type'];
         }
     }
     
-    function save($db)
+    /*function save($db)
     {
         $data = json_encode($this->pieceID);
         if ($this->boardID === NULL)
@@ -136,12 +147,12 @@ class GameBoard {
         }
         else
         {
-            $save = "UPDATE board"
-                    . "SET piece = $data"
-                    . "WHERE id = $this->boardID";
+            $save = "UPDATE board
+                    SET piece = $data
+                    WHERE id = $this->boardID";
             $db->exec($save);
         }
-    }
+    }*/
     
     function __construct($id = NULL) {
         $this->Board = array_fill(0, 8, array_fill(0, 8, 0));

@@ -26,7 +26,6 @@ abstract class piece
             $this->alive = $alive;
             $GameBoard->Board[$this->coordinates['ligne']][$this->coordinates['colonne']] = $this;
             $this->Gameboard = &$GameBoard->Board;
-            var_dump($id);
             if ($id == NULL) {
 
                 $insert=   "INSERT INTO piece (alive, color, type, gameboard, ligne, colonne)
@@ -46,19 +45,20 @@ abstract class piece
             $j = 1;
             $legalMoves = array();
             while ($i) {
-                if (!$this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] + $j]) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + $j , 'ligne' => $this->coordinates['ligne'] );
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] + $j]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] + $j]->color != $this->color) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + $j , 'ligne' => $this->coordinates['ligne'] );
-                    $i = 0;
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] + $j]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] + $j]->color == $this->color) {
-                    $i = 0;
-                }
-                if ($this->coordinates['colonne'] + $j <7){
+                if ($this->coordinates['colonne'] + $j <= 7){
+                    if (!$this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] + $j]) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + $j , 'ligne' => $this->coordinates['ligne'] );
+                    }
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] + $j]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] + $j]->color != $this->color) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + $j , 'ligne' => $this->coordinates['ligne'] );
+                        $i = 0;
+                    }
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] + $j]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] + $j]->color == $this->color) {
+                        $i = 0;
+                    }
+
                     $j++;
                 }
                 else{
@@ -73,19 +73,19 @@ abstract class piece
             $j = 1;
             $legalMoves = array();
             while ($i) {
-                if (!$this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] - $j]) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j , 'ligne' => $this->coordinates['ligne'] );
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] - $j]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] - $j]->color != $this->color) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j , 'ligne' => $this->coordinates['ligne'] );
-                    $i=0;
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] - $j]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] - $j]->color == $this->color) {
-                    $i=0;
-                }
-                if ($this->coordinates['colonne'] - $j > 0 ){
+                if ($this->coordinates['colonne'] - $j >= 0 ){
+                    if (!$this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] - $j]) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j , 'ligne' => $this->coordinates['ligne'] );
+                    }
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] - $j]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] - $j]->color != $this->color) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j , 'ligne' => $this->coordinates['ligne'] );
+                        $i=0;
+                    }
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] - $j]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne'] - $j]->color == $this->color) {
+                        $i=0;
+                    }
                     $j++;
                 }
                 else {
@@ -101,22 +101,22 @@ abstract class piece
             $j = 1;
             $legalMoves = array();
             while ($i) {
-                if (!$this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne']]) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'], 'ligne' => $this->coordinates['ligne'] - $j );
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne']]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne']]->color != $this->color) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'], 'ligne' => $this->coordinates['ligne'] - $j);
-                    $i=0;
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne']]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne']]->color == $this->color) {
-                    $i=0;
-                }
-
-                if ($this->coordinates['ligne'] - $j > 0){
+                if ($this->coordinates['ligne'] - $j >= 0){
+                    if (!$this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne']]) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'], 'ligne' => $this->coordinates['ligne'] - $j );
+                    }
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne']]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne']]->color != $this->color) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'], 'ligne' => $this->coordinates['ligne'] - $j);
+                        $i=0;
+                    }
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne']]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne']]->color == $this->color) {
+                        $i=0;
+                    }
                     $j++;
                 }
+
                 else {
                     $i = 0;
                 }
@@ -130,22 +130,23 @@ abstract class piece
             $j = 1;
             $legalMoves = array();
             while ($i) {
-                if (!$this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne']]) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'], 'ligne' => $this->coordinates['ligne'] - $j );
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne']]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne']]->color != $this->color) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'], 'ligne' => $this->coordinates['ligne'] - $j);
-                    $i=0;
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne']]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne']]->color == $this->color) {
-                    $i=0;
-                }
+                if( $this->coordinates['ligne'] + $j <= 7){
+                    if (!$this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne']]) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'], 'ligne' => $this->coordinates['ligne'] + $j );
+                    }
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne']]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne']]->color != $this->color) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'], 'ligne' => $this->coordinates['ligne'] + $j);
+                        $i=0;
+                    }
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne']]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne']]->color == $this->color) {
+                        $i=0;
+                    }
 
-                if( $this->coordinates['ligne'] + $j < 7){
                     $j++;
                 }
+
                 else {
                     $i = 0;
                 }
@@ -159,21 +160,25 @@ abstract class piece
             $j = 1;
             $legalMoves = array();
             while ($i) {
-                if (!$this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] + $j]) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + $j, 'ligne' => $this->coordinates['ligne'] - $j );
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] + $j]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] + $j]->color != $this->color) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + $j, 'ligne' => $this->coordinates['ligne'] - $j);
-                    $i=0;
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] + $j]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] + $j]->color == $this->color) {
-                    $i=0;
-                }
-                if($this->coordinates['ligne'] - $j > 0 && $this->coordinates['colonne'] - $j > 0){
+                if($this->coordinates['ligne'] - $j >= 0 && $this->coordinates['colonne'] + $j <= 7){
+                    if (!$this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] + $j]) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + $j, 'ligne' => $this->coordinates['ligne'] - $j );
+                    }
+
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] + $j]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] + $j]->color != $this->color) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + $j, 'ligne' => $this->coordinates['ligne'] - $j);
+                        $i=0;
+                    }
+
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] + $j]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] + $j]->color == $this->color) {
+                        $i=0;
+                    }
+
                     $j++;
                 }
+
                 else{
                     $i = 0;
                 }
@@ -187,21 +192,52 @@ abstract class piece
             $j = 1;
             $legalMoves = array();
             while ($i) {
-                $ligne = (int)$this->coordinates['ligne'] - $j;
-                if ($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] - $j] === 0) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j, 'ligne' => $this->coordinates['ligne'] - $j );
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] - $j]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] - $j]->color != $this->color) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j, 'ligne' => $this->coordinates['ligne'] - $j);
-                    $i=0;
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] - $j]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] - $j]->color == $this->color) {
-                    $i=0;
+                if ($this->coordinates['ligne'] - $j >= 0 && $this->coordinates['colonne'] - $j >= 0){
+                    $ligne = (int)$this->coordinates['ligne'] - $j;
+                    if ($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] - $j] === 0) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j, 'ligne' => $this->coordinates['ligne'] - $j );
+                    }
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] - $j]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] - $j]->color != $this->color) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j, 'ligne' => $this->coordinates['ligne'] - $j);
+                        $i=0;
+                    }
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] - $j]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] - $j]->color == $this->color) {
+                        $i=0;
+                    }
+
+                    $j++;
                 }
 
-                if ($this->coordinates['ligne'] - $j > 0 && $this->coordinates['colonne'] - $j > 0){
+                else{
+                    $i = 0;
+                }
+            }
+
+            return $legalMoves;
+        }
+
+        function downLeft(){
+            $i = 1;
+            $j = 1;
+            $legalMoves = array();
+
+            while ($i) {
+                if ($this->coordinates['ligne'] + $j <= 7 && $this->coordinates['colonne'] - $j >= 0){
+                        if ($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] - $j] === 0) {
+                            $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j, 'ligne' => $this->coordinates['ligne'] + $j );
+                        }
+                        elseif (gettype($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] - $j]) == 'object'
+                        && $this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] - $j]->color != $this->color) {
+                            $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j, 'ligne' => $this->coordinates['ligne'] + $j);
+                            $i=0;
+                        }
+                        elseif (gettype($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] - $j]) == 'object'
+                        && $this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] - $j]->color == $this->color) {
+                            $i=0;
+                        }
+
                     $j++;
                 }
                 else{
@@ -216,49 +252,21 @@ abstract class piece
             $i = 1;
             $j = 1;
             $legalMoves = array();
-
             while ($i) {
-                if ($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] - $j] === 0) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j, 'ligne' => $this->coordinates['ligne'] + $j );
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] - $j]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] - $j]->color != $this->color) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j, 'ligne' => $this->coordinates['ligne'] + $j);
-                    $i=0;
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] - $j]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] - $j]->color == $this->color) {
-                    $i=0;
-                }
-                if ($this->coordinates['ligne'] + $j < 7 && $this->coordinates['colonne'] - $j > 0){
-                    $j++;
-                }
-                else{
-                    $i = 0;
-                }
-            }
+                if ($this->coordinates['ligne'] + $j <= 7 && $this->coordinates['colonne'] + $j <= 7){
+                    if (!$this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] + $j]) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + $j, 'ligne' => $this->coordinates['ligne'] + $j );
+                    }
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] + $j]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] + $j]->color != $this->color) {
+                        $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + $j, 'ligne' => $this->coordinates['ligne'] + $j);
+                        $i=0;
+                    }
+                    elseif (gettype($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] + $j]) == 'object'
+                    && $this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] + $j]->color == $this->color) {
+                        $i=0;
+                    }
 
-            return $legalMoves;
-        }
-
-        function downLeft(){
-            $i = 1;
-            $j = 1;
-            $legalMoves = array();
-            while ($i) {
-                if (!$this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] + $j]) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + $j, 'ligne' => $this->coordinates['ligne'] + $j );
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] + $j]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] + $j]->color != $this->color) {
-                    $legalMoves[] = array('colonne' => $this->coordinates['colonne'] + $j, 'ligne' => $this->coordinates['ligne'] + $j);
-                    $i=0;
-                }
-                elseif (gettype($this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] + $j]) == 'object'
-                && $this->Gameboard[$this->coordinates['ligne'] + $j][$this->coordinates['colonne'] + $j]->color == $this->color) {
-                    $i=0;
-                }
-                if ($this->coordinates['ligne'] + $j < 7 && $this->coordinates['colonne'] + $j < 7){
                     $j++;
                 }
                 else{
@@ -271,36 +279,52 @@ abstract class piece
 
         function move($destination)
         {
-            //global $bw;
-            echo "console.log(coucou)";
+
+            global $db;
+            $moved = 0;
+            $db->beginTransaction();
+            $startColumn = $this->coordinates['colonne'];
+            $startRow = $this->coordinates['ligne'];
             $moveBuffer = $this->legalMoves();
-            /*$bw = !$bw;
-            if (($this->color == 'W' && !$bw) or ($this->color == 'B' && $bw))
-                echo(json_encode(array('error'=>'Wadya do wrong color!!')));
-            else*/if (empty($moveBuffer)) {
+            if (empty($moveBuffer)) {
                 echo 'No legal move available!';
             }
             else {
                 foreach ($moveBuffer as $key => $value) {
                     if ($moveBuffer[$key] == $destination) {
-                        if ($this->Gameboard[$destination['ligne']][$destination['colonne']] !== 0)
+                        $target = $this->Gameboard[$destination['ligne']][$destination['colonne']];
+                        if ($target !== 0)
                         {
-                            $this->Gameboard[$destination['ligne']][$destination['colonne']]->alive = 0;
-                            $this->Gameboard[$destination['ligne']][$destination['colonne']] = 0;
+                            echo $target->id;
+                            $ded = "UPDATE piece 
+                                    SET alive = 0
+                                     WHERE id = $target->id;";
+                            $db->exec($ded);
+
                         }
                         $this->Gameboard[$this->coordinates['ligne']][$this->coordinates['colonne']] = 0;
                         $this->coordinates = $destination;
                         $this->Gameboard[$destination['ligne']][$destination['colonne']] = $this;
+                        $moved = 1;
                     }
                 }
             }
-            global $db;
+
             $ligne = $this->coordinates['ligne'];
             $colonne = $this->coordinates['colonne'];
             $query = "UPDATE piece
                     SET ligne = $ligne, colonne = $colonne
                     WHERE id = $this->id ;";
             $db->exec($query);
+
+            if($moved){
+                $query2 = "INSERT INTO moves (piece_id, start_row, start_column, target_row, target_column)
+                           VALUES ('$this->id', '$startRow', '$startColumn', '$colonne', '$ligne')";
+                $db->exec($query2);
+            }
+            $db->commit();
         }
     }
+
+
 ?>
