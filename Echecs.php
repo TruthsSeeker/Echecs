@@ -16,14 +16,14 @@
     $turnQuery = "SELECT p.id, p.gameboard, p.color, m.id, m.piece_id
                   FROM piece AS p, moves AS m 
                   WHERE p.id = m.piece_id AND 
-                  p.gameboard = 6
+                  p.gameboard = '$GameBoard->boardID'
                   ORDER BY m.id DESC;";
     $lastTurn = $db->query($turnQuery)->fetch()['color'];
 
     if ($lastTurn == 'W'){
         $turn = 'B';
     }
-    elseif ($lastTurn == 'B'){
+    else{
         $turn = 'W';
     }
 
