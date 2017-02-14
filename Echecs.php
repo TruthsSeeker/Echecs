@@ -2,7 +2,7 @@
 
     include "pieceChildClasses.php";
     include "GameBoard.php";
-    $bw = 0;
+    $turn = 0;
 
     try {
         $db= new PDO('mysql:host=localhost;dbname=chess', 'root', '');
@@ -12,6 +12,20 @@
 
     $GameBoard = new GameBoard($_GET['gameboard']);
     $GameBoard->setUpFromLoad($_GET['gameboard']);
+
+    $turnQuery = "SELECT p.id, p.gameboard, p.color, m.id, m.piece_id
+                  FROM piece AS p, moves AS m 
+                  WHERE p.id = m.piece_id AND 
+                  p.gameboard = 6
+                  ORDER BY m.id DESC;";
+    $lastTurn = $db->query($turnQuery)->fetch()['color'];
+
+    if ($lastTurn == 'W'){
+        $turn = 'B';
+    }
+    elseif ($lastTurn == 'B'){
+        $turn = 'W';
+    }
 
     if( !empty($_POST))
 	{
@@ -40,6 +54,7 @@
     </head>
 
     <body>
+    <div hidden="hidden" data-turn="<?php echo $turn?>" data-player="<?php echo $_GET['player']?>" class="info"></div>
         <div class="dedW">
             <table>
 
@@ -80,14 +95,14 @@
                             <td class= "blanc" data-id = "<?php echo $key.';'.$key2; ?>">
                                 <?php $BWcursor=1; ?>
                                 <?php if ($GameBoard->Board[$key][$key2] !== 0): ?>
-                                <img src="<?php echo 'img/'.$GameBoard->Board[$key][$key2]->color.$GameBoard->Board[$key][$key2]->type;?>.png">
+                                <img src="<?php echo 'img/'.$GameBoard->Board[$key][$key2]->color.$GameBoard->Board[$key][$key2]->type;?>.png" data-color="<?php echo $GameBoard->Board[$key][$key2]->color?>">
                                 <?php endif; ?>
                             </td>
                         <?php else: ?>
                             <td class= "noir" data-id = "<?php echo $key.';'.$key2; ?>">
                                 <?php $BWcursor=0;?>
                                 <?php if ($GameBoard->Board[$key][$key2] !== 0): ?>
-                                <img src="<?php echo 'img/'.$GameBoard->Board[$key][$key2]->color.$GameBoard->Board[$key][$key2]->type;?>.png">
+                                <img src="<?php echo 'img/'.$GameBoard->Board[$key][$key2]->color.$GameBoard->Board[$key][$key2]->type;?>.png" data-color="<?php echo $GameBoard->Board[$key][$key2]->color?>">
                                 <?php endif; ?>
                             </td>
                         <?php endif;?>

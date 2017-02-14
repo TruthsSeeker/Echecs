@@ -60,7 +60,6 @@
 
     class queen extends piece
     {
-
         function legalMoves()
         {
             $legalMoves = array();

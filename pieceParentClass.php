@@ -193,7 +193,6 @@ abstract class piece
             $legalMoves = array();
             while ($i) {
                 if ($this->coordinates['ligne'] - $j >= 0 && $this->coordinates['colonne'] - $j >= 0){
-                    $ligne = (int)$this->coordinates['ligne'] - $j;
                     if ($this->Gameboard[$this->coordinates['ligne'] - $j][$this->coordinates['colonne'] - $j] === 0) {
                         $legalMoves[] = array('colonne' => $this->coordinates['colonne'] - $j, 'ligne' => $this->coordinates['ligne'] - $j );
                     }
