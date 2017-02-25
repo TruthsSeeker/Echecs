@@ -1,5 +1,4 @@
 <?php
-
     include "pieceChildClasses.php";
     include "GameBoard.php";
     $turn = 0;
@@ -10,8 +9,18 @@
         echo "Database Connection error";
     }
 
+    if (!empty($_GET['new'])){
+        $GameBoard = new GameBoard();
+        $GameBoard->setUpFromLoad();
+        $rand = (rand(0,1)? "W" : "B");
+        error_reporting(E_ALL);
+        header("Location: Echecs.php?gameboard=".$GameBoard->boardID."&player=".$rand);
+        die; //TODO Find a way to change the url and reload the page
+    }
+    else{
     $GameBoard = new GameBoard($_GET['gameboard']);
     $GameBoard->setUpFromLoad($_GET['gameboard']);
+    }
 
     $turnQuery = "SELECT p.id, p.gameboard, p.color, m.id, m.piece_id
                   FROM piece AS p, moves AS m 
@@ -27,7 +36,8 @@
         $turn = 'W';
     }
 
-    if( !empty($_POST))
+
+    if( !empty($_POST['targetRow']))
 	{
 
 		global $GameBoard;
@@ -44,6 +54,7 @@
 	}
 ?>
 <?php if(empty($_POST)):?>
+<DOCTYPE HTML>
 <html>
 
 
@@ -54,7 +65,7 @@
     </head>
 
     <body>
-    <div hidden="hidden" data-turn="<?php echo $turn?>" data-player="<?php echo $_GET['player']?>" class="info"></div>
+    <div hidden="hidden" data-turn="<?php echo $turn?>" data-player="<?php echo $_GET['player']?>" data-gameboard="<?php echo $_GET['gameboard']?>" class="info"></div>
         <div class="dedW">
             <table>
 
@@ -125,6 +136,10 @@
             </table>
         </div>
 
+        <div class="form">
+        </div>
+
     </body>
 </html>
 <?php endif;?>
+</DOCTYPE>

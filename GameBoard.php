@@ -74,15 +74,7 @@ class GameBoard {
              $this->newGame();
              return;
         }
-        /*foreach ($pieceArray as $value)
-        {
-            global $db;
-            $pieceLoader = "SELECT color, type, alive, coordinates "
-                    . "FROM `piece`"
-                    . "WHERE id = $value";
-            $pieces= $db->query($pieceLoader)->fetch();
-            $this->pieceCreator($pieces);
-        }*/
+
 
         $query = "SELECT * FROM piece
                   WHERE gameboard = '$id'";

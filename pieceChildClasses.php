@@ -180,7 +180,7 @@
         function legalMoves()
         {
             $legalMoves = array();
-            /*$legalMoves[] = $this->enPassant();*/
+            $legalMoves[] = $this->enPassant();
             if ($this->color == 'B')
             {
                 if ($this->Gameboard[$this->coordinates['ligne'] + 1][$this->coordinates['colonne']] === 0)

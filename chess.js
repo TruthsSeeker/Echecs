@@ -1,16 +1,32 @@
-//$ ceci est du jquery
-
 
 $( document ).ready(function() {
 
-   if ($('.info').data('player') != $('.info').data('turn')){
+    var turn = 0;
+
+    function checkTurn(){
         setTimeout(function(){
-        window.location.reload(1);
-        }, 500);
+            if(!turn){
+                $.post(
+                    "isTurn.php",
+                    {
+                        "gameboard" : $('.info').data('gameboard'),
+                        "player" : $('.info').data('player')
+                    },
+                    function(data){
+                        turn = data;
+                        if (!turn){
+                            checkTurn();
+                        }
+                        else{
+                            window.location.reload();
+                        }
+                    }
+                )};//TODO arretez de vous rafraichir (vous etes des animaux)
+        }, 500)
+
     }
 
-
-
+    checkTurn();
     var step = 0;
     var piece, startCoordinates, targetCoordinates;
 
@@ -49,3 +65,5 @@ $( document ).ready(function() {
     });
 
 });
+
+
