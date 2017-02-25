@@ -1,4 +1,8 @@
 <?php
+/*Changed function to return either 'W' or 'B' instead of a boolean
+ * Equivalence check to be done in JS to facilitate recursion
+ *
+ * */
 try {
     $db= new PDO('mysql:host=localhost;dbname=chess', 'root', '');
 } catch (Exception $db) {
@@ -12,4 +16,21 @@ $turnQuery = "SELECT p.id, p.gameboard, p.color, m.id, m.piece_id
                   p.gameboard = ".$_POST['gameboard']."
                   ORDER BY m.id DESC;";
 $lastTurn = $db->query($turnQuery)->fetch()['color'];
-echo ($_POST['player'] == $lastTurn)? 0 : 1;
+$currentTurn = 'e';
+
+
+
+if($lastTurn == 'W')
+{
+    $currentTurn = 'B';
+}
+elseif ($lastTurn == 'B')
+{
+    $currentTurn = 'W';
+}
+else
+{
+    $currentTurn = 'error';
+}
+
+echo $currentTurn;
