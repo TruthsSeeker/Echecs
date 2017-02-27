@@ -22,7 +22,7 @@ $( document ).ready(function() {
                             window.location.reload();
                         }
                         else{
-                            window.location.reload();
+                            checkTurn();
                         }
                     }
                 )};//TODO arretez de vous rafraichir (vous etes des animaux)
@@ -31,7 +31,7 @@ $( document ).ready(function() {
     }*/
 //I tried something by separating the logic of pieceMove() from the JQuery event function but something isn't
 //working correctly. I suspect I'm doing something wrong regarding jQuery events or I need to pass parameters
-//TODO
+//TODO pass $(this) to pieceMove()
     function pieceMove() {
         if (step) {
             targetCoordinates = $(this).attr("data-id").split(";");//chopper coordonnées d'arrivée
@@ -68,8 +68,6 @@ $( document ).ready(function() {
 
     /*checkTurn();*/
 
-    var step = 0;
-    var piece, startCoordinates, targetCoordinates;
 
 //This is the "event function". I was trying to see the different things happening for each event
 //but there is something I'm doing wrong. I think it might be to do with the parameters I'm passing
