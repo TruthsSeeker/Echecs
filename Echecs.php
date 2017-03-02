@@ -125,7 +125,6 @@
 
         <div class="dedB">
             <table>
-
                 <?php foreach ($GameBoard->dedB as $piece):?>
                     <tr>
                         <td>
@@ -135,10 +134,6 @@
                 <?php endforeach;?>
             </table>
         </div>
-
-        <div class="form">
-        </div>
-
     </body>
 </html>
 <?php endif;?>
